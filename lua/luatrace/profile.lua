@@ -425,12 +425,12 @@ function profile.close()
   table.sort(f2, function(a, b) return a.self_time > b.self_time end)
 
   local title_len = 9
-  for i = 1, math.min(20, #lines) do
+  for i = 1, math.min(30, #lines) do
     local l = lines[i]
     l.title = ("%s:%d"):format(l.file.filename, l.line_number)
     title_len = math.max(title_len, l.title:len())
   end
-  for i = 1, math.min(20, #f2) do
+  for i = 1, math.min(30, #f2) do
     local f = f2[i]
     f.title = ("%s:%d-%d"):format(f.source_file.filename, f.line_defined, f.last_line_defined)
     title_len = math.max(title_len, f.title:len())
@@ -443,18 +443,18 @@ function profile.close()
   local function report_format(f) return title_format.."  "..f.hit.."  "..f.time.."  "..f.time.."  "..f.time.. " | %s\n" end
   line_format = report_format(formats.n)
 
-  io.stderr:write("Top 20 lines by total time\n")
+  io.stderr:write("Top 30 lines by total time\n")
   io.stderr:write(report_format(formats.s):format("File:line", "Hits", "Total", "Self", "Child", "Line"))
-  for i = 1, math.min(20, #lines) do
+  for i = 1, math.min(30, #lines) do
     local l = lines[i]
     io.stderr:write(line_format:format(l.title, l.hits,
       (l.self_time + l.child_time) / formats.divisor, l.self_time / formats.divisor, l.child_time / formats.divisor,
       l.text or "-"))
   end
 
-  io.stderr:write("\nTop 20 functions by self time\n")
+  io.stderr:write("\nTop 30 functions by self time\n")
   io.stderr:write(report_format(formats.s):format("File:lines", "Hits", "Total", "Self", "Child", "Line"))
-  for i = 1, math.min(20, #f2) do
+  for i = 1, math.min(30, #f2) do
     local l = f2[i]
     local line = l.source_file.lines[l.line_defined]
     l.text = line and line.text or nil
