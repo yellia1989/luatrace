@@ -3,9 +3,16 @@ LUA_BINDIR= $(shell echo `dirname $(LUA)`)
 LUA_PREFIX= $(shell echo `dirname $(LUA_BINDIR)`)
 LUA_SHAREDIR=$(LUA_PREFIX)/share/lua/5.1
 LUA_LIBDIR=$(LUA_PREFIX)/lib/lua/5.1
-LUA_H:= $(shell echo `find $(LUA_PREFIX)/include -name "lua.h"`)
+LUA_H:= $(shell echo `find $(LUA_PREFIX)/include -name "lua.h" | sort`)
 LUA_H:= $(shell echo `echo $(LUA_H) | cut -f 1 -d \ `)
 LUA_INCDIR= $(shell echo `dirname $(LUA_H)`)
+
+$(info lua_bindir: $(LUA_BINDIR))
+$(info lua_prefix: $(LUA_PREFIX))
+$(info lua_sharedir: $(LUA_SHAREDIR))
+$(info libdir: $(LUA_LIBDIR))
+$(info lau_h: $(LUA_H))
+$(info lau_incdir: $(LUA_INCDIR))
 
 CC=/usr/bin/cc
 CFLAGS=-O3 -Wall -Wextra -pedantic
